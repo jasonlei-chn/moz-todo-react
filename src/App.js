@@ -4,11 +4,28 @@ import Todo from "./components/Todo";
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 
-function App(props) {
+export default function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
+
   const addTask = (name) => {
     const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
     setTasks([...tasks, newTask]);
+  };
+
+  const toggleTaskCompleted = (id) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, completed: !task.completed };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  };
+
+  const deleteTask = (id) => {
+    console.log(id);
+    const remainingTasks = tasks.filter((task) => task.id !== id);
+    setTasks(remainingTasks);
   };
 
   const taskList = tasks.map((task) => {
@@ -18,6 +35,8 @@ function App(props) {
         completed={task.completed}
         id={task.id}
         key={task.id}
+        toggleTaskCompleted={toggleTaskCompleted}
+        deleteTask={deleteTask}
       />
     );
   });
@@ -45,5 +64,3 @@ function App(props) {
     </div>
   );
 }
-
-export default App;

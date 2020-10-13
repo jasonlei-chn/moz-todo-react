@@ -2,14 +2,17 @@ import React, { useState } from "react";
 
 export default function Form(props) {
   const [name, setName] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     props.addTask(name);
     setName("");
   };
+
   const handleChange = (e) => {
     setName(e.target.value);
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <h2 className="label-wrapper">
